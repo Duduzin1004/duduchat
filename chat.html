@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DuduChat</title>
 
 <link rel="stylesheet" href="estilo.css">
 
 <script type="module" src="chat.js" defer></script>
+
 </head>
 
 <body>
@@ -15,35 +18,29 @@
 <div class="container">
 
     <aside class="sidebar">
+
         <h2>DuduChat</h2>
 
         <div id="userInfo"></div>
 
-        <button id="addFriendBtn">
-            + Adicionar Amigo
+        <button id="logoutBtn">
+            Sair
         </button>
 
-        <div id="friendsList"></div>
     </aside>
 
     <main class="chatArea">
 
-        <div id="chatHeader">
-            Selecione um amigo
+        <div class="chatHeader">
+            Chat
         </div>
 
-        <div id="messages"></div>
+        <div id="messages">
 
-        <div class="sendBox">
-            <input
-                type="text"
-                id="messageInput"
-                placeholder="Digite uma mensagem..."
-            >
+            <div class="message">
+                Bem-vindo ao DuduChat 🚀
+            </div>
 
-            <button id="sendBtn">
-                Enviar
-            </button>
         </div>
 
     </main>
