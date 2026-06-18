@@ -5,7 +5,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebas
 
 // Configuração do seu Firebase
 const firebaseConfig = {
-  apiKey: "SAIzaSyDQ1Aj_r9d3E26aky8R3wb1c5YtlDC5LS4",
+  apiKey: "AIzaSyDQ1Aj_r9d3E26aky8R3wb1c5YtlDC5LS4",
   authDomain: "duduchat-43b42.firebaseapp.com",
   projectId: "duduchat-43b42",
   storageBucket: "duduchat-43b42.firebasestorage.app",
