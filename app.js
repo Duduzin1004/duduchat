@@ -20,7 +20,7 @@ loginBtn.addEventListener("click", async () => {
       senha
     );
 
-    window.location.href = "chat.html";
+    window.location.href = "bate-papo.html";
 
   } catch (e) {
 
