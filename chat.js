@@ -1,10 +1,10 @@
 import { auth, db } from "./firebase.js";
 
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+console.log("CHAT INICIOU");
 
+const userInfo = document.getElementById("userInfo");
+
+console.log("userInfo:", userInfo);
 import {
   doc,
   getDoc,
