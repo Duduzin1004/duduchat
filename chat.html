@@ -1,12 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Teste CSS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuduChat</title>
+
 <link rel="stylesheet" href="style.css">
+
+<script type="module" src="chat.js" defer></script>
 </head>
+
 <body>
 
-<h1>DUDUCHAT FUNCIONANDO</h1>
+<div class="container">
+
+    <aside class="sidebar">
+        <h2>DuduChat</h2>
+
+        <div id="userInfo"></div>
+
+        <button id="addFriendBtn">
+            + Adicionar Amigo
+        </button>
+
+        <div id="friendsList"></div>
+    </aside>
+
+    <main class="chatArea">
+
+        <div id="chatHeader">
+            Selecione um amigo
+        </div>
+
+        <div id="messages"></div>
+
+        <div class="sendBox">
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Digite uma mensagem..."
+            >
+
+            <button id="sendBtn">
+                Enviar
+            </button>
+        </div>
+
+    </main>
+
+</div>
 
 </body>
 </html>
