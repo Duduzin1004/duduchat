@@ -18,6 +18,5 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-console.log("Firebase iniciado");
-console.log("API:", firebaseConfig.apiKey);
-console.log("Projeto:", firebaseConfig.projectId);
+
+console.log("API REAL:", firebaseConfig.apiKey);
