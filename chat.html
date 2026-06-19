@@ -1,49 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>DuduChat</title>
 
-<link rel="stylesheet" href="estilo.css">
-
+<link rel="stylesheet" href="style.css">
 <script type="module" src="chat.js" defer></script>
-
 </head>
 
 <body>
 
 <div class="container">
 
-    <aside class="sidebar">
+  <aside class="sidebar">
+    <h2>DuduChat</h2>
 
-        <h2>DuduChat</h2>
+    <div id="userInfo"></div>
 
-        <div id="userInfo"></div>
+    <button id="logoutBtn">Sair</button>
+  </aside>
 
-        <button id="logoutBtn">
-            Sair
-        </button>
+  <main class="chatArea">
 
-    </aside>
+    <div class="chatHeader">Chat Global</div>
 
-    <main class="chatArea">
+    <div id="messages"></div>
 
-        <div class="chatHeader">
-            Chat
-        </div>
+    <div class="inputArea">
+      <input id="msgInput" placeholder="Digite sua mensagem...">
+      <button id="sendBtn">Enviar</button>
+    </div>
 
-        <div id="messages">
-
-            <div class="message">
-                Bem-vindo ao DuduChat 🚀
-            </div>
-
-        </div>
-
-    </main>
+  </main>
 
 </div>
 
