@@ -22,7 +22,6 @@ const msgInput = document.getElementById("msgInput");
 
 let userLogado = null;
 
-
 // 🔐 LOGIN
 onAuthStateChanged(auth, (user) => {
 
@@ -40,12 +39,6 @@ onAuthStateChanged(auth, (user) => {
     <p>${user.email}</p>
   `;
 
-  // 💥 CHAT PRIVADO (VOCÊ + ELOISE)
-  chatId = [user.email, "eloise@duduchat.com"]
-    .sort()
-    .join("_");
-
-  carregarMensagens();
 });
 
 // 🚪 LOGOUT
@@ -54,13 +47,13 @@ logoutBtn.addEventListener("click", async () => {
   window.location.href = "index.html";
 });
 
-// 💬 ENVIAR MENSAGEM
+// 💬 ENVIAR MENSAGEM PRO
 sendBtn.addEventListener("click", async () => {
 
   const texto = msgInput.value.trim();
-  if (!texto || !chatId) return;
+  if (!texto) return;
 
-  await addDoc(collection(db, "conversas", chatId, "mensagens"), {
+  await addDoc(collection(db, "mensagens"), {
     texto,
     usuario: userLogado.email,
     uid: userLogado.uid,
@@ -70,34 +63,30 @@ sendBtn.addEventListener("click", async () => {
   msgInput.value = "";
 });
 
-// 📡 CARREGAR MENSAGENS (TEMPO REAL)
-function carregarMensagens() {
+// 📡 MENSAGENS EM TEMPO REAL PRO
+const q = query(collection(db, "mensagens"), orderBy("criadoEm"));
 
-  const q = query(
-    collection(db, "conversas", chatId, "mensagens"),
-    orderBy("criadoEm")
-  );
+onSnapshot(q, (snapshot) => {
 
-  onSnapshot(q, (snapshot) => {
+  messagesDiv.innerHTML = "";
 
-    messagesDiv.innerHTML = "";
+  snapshot.forEach((doc) => {
 
-    snapshot.forEach((doc) => {
+    const msg = doc.data();
 
-      const msg = doc.data();
-      const isEu = msg.uid === userLogado.uid;
+    const isEu = msg.uid === userLogado.uid;
 
-      messagesDiv.innerHTML += `
-        <div class="msg ${isEu ? "eu" : "outro"}">
-          <div class="bubble">
-            <span>${msg.texto}</span>
-            <small>${msg.usuario.split("@")[0]}</small>
-          </div>
+    messagesDiv.innerHTML += `
+      <div class="msg ${isEu ? "eu" : "outro"}">
+        <div class="bubble">
+          <span>${msg.texto}</span>
+          <small>${msg.usuario.split("@")[0]}</small>
         </div>
-      `;
+      </div>
+    `;
 
-    });
-
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
-}
+
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+});
