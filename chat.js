@@ -21,6 +21,7 @@ const sendBtn = document.getElementById("sendBtn");
 const msgInput = document.getElementById("msgInput");
 
 let userLogado = null;
+let chatId = null;
 
 // 🔐 LOGIN
 onAuthStateChanged(auth, (user) => {
@@ -39,6 +40,12 @@ onAuthStateChanged(auth, (user) => {
     <p>${user.email}</p>
   `;
 
+  // 💥 CHAT PRIVADO (VOCÊ + ELOISE)
+  chatId = [user.email, "eloise@duduchat.com"]
+    .sort()
+    .join("_");
+
+  carregarMensagens();
 });
 
 // 🚪 LOGOUT
@@ -47,13 +54,13 @@ logoutBtn.addEventListener("click", async () => {
   window.location.href = "index.html";
 });
 
-// 💬 ENVIAR MENSAGEM PRO
+// 💬 ENVIAR MENSAGEM
 sendBtn.addEventListener("click", async () => {
 
   const texto = msgInput.value.trim();
-  if (!texto) return;
+  if (!texto || !chatId) return;
 
-  await addDoc(collection(db, "mensagens"), {
+  await addDoc(collection(db, "conversas", chatId, "mensagens"), {
     texto,
     usuario: userLogado.email,
     uid: userLogado.uid,
@@ -63,30 +70,34 @@ sendBtn.addEventListener("click", async () => {
   msgInput.value = "";
 });
 
-// 📡 MENSAGENS EM TEMPO REAL PRO
-const q = query(collection(db, "mensagens"), orderBy("criadoEm"));
+// 📡 CARREGAR MENSAGENS (TEMPO REAL)
+function carregarMensagens() {
 
-onSnapshot(q, (snapshot) => {
+  const q = query(
+    collection(db, "conversas", chatId, "mensagens"),
+    orderBy("criadoEm")
+  );
 
-  messagesDiv.innerHTML = "";
+  onSnapshot(q, (snapshot) => {
 
-  snapshot.forEach((doc) => {
+    messagesDiv.innerHTML = "";
 
-    const msg = doc.data();
+    snapshot.forEach((doc) => {
 
-    const isEu = msg.uid === userLogado.uid;
+      const msg = doc.data();
+      const isEu = msg.uid === userLogado.uid;
 
-    messagesDiv.innerHTML += `
-      <div class="msg ${isEu ? "eu" : "outro"}">
-        <div class="bubble">
-          <span>${msg.texto}</span>
-          <small>${msg.usuario.split("@")[0]}</small>
+      messagesDiv.innerHTML += `
+        <div class="msg ${isEu ? "eu" : "outro"}">
+          <div class="bubble">
+            <span>${msg.texto}</span>
+            <small>${msg.usuario.split("@")[0]}</small>
+          </div>
         </div>
-      </div>
-    `;
+      `;
 
+    });
+
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
-
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-});
+}
