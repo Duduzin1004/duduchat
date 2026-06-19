@@ -33,19 +33,10 @@ onAuthStateChanged(auth, (user) => {
 
   userLogado = user;
 
-  const nome = user.email.split("@")[0];
-
-  userInfo.innerHTML = `
-    <h3>${nome}</h3>
-    <p>${user.email}</p>
-  `;
-
-  // 💥 CHAT PRIVADO (VOCÊ + ELOISE)
   chatId = [user.email, "eloise@duduchat.com"]
     .sort()
     .join("_");
 
-  carregarMensagens();
 });
 
 // 🚪 LOGOUT
