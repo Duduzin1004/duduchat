@@ -33,10 +33,20 @@ onAuthStateChanged(auth, (user) => {
 
   userLogado = user;
 
+  const nome = user.email.split("@")[0];
+
+  userInfo.innerHTML = `
+    <h3>${nome}</h3>
+    <p>${user.email}</p>
+  `;
+
+  // 💥 CHAT PRIVADO FIXO COM ELOISE
   chatId = [user.email, "eloise@duduchat.com"]
     .sort()
     .join("_");
 
+  // ⚡ IMPORTANTE: chama o chat aqui
+  carregarMensagens();
 });
 
 // 🚪 LOGOUT
@@ -61,7 +71,7 @@ sendBtn.addEventListener("click", async () => {
   msgInput.value = "";
 });
 
-// 📡 CARREGAR MENSAGENS (TEMPO REAL)
+// 📡 CARREGAR MENSAGENS
 function carregarMensagens() {
 
   const q = query(
