@@ -21,10 +21,32 @@ const sendBtn = document.getElementById("sendBtn");
 const msgInput = document.getElementById("msgInput");
 
 let userLogado = null;
-let chatId = null;
+
 
 // 🔐 LOGIN
+onAuthStateChanged(auth, (user) => {
 
+  if (!user) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  userLogado = user;
+
+  const nome = user.email.split("@")[0];
+
+  userInfo.innerHTML = `
+    <h3>${nome}</h3>
+    <p>${user.email}</p>
+  `;
+
+  // 💥 CHAT PRIVADO (VOCÊ + ELOISE)
+  chatId = [user.email, "eloise@duduchat.com"]
+    .sort()
+    .join("_");
+
+  carregarMensagens();
+});
 
 // 🚪 LOGOUT
 logoutBtn.addEventListener("click", async () => {
