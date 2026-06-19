@@ -64,15 +64,20 @@ sendBtn.addEventListener("click", async () => {
 });
 
 // 📡 MENSAGENS EM TEMPO REAL PRO
+// 📡 MENSAGENS EM TEMPO REAL PRO
 const q = query(collection(db, "mensagens"), orderBy("criadoEm"));
 
 onSnapshot(q, (snapshot) => {
+  // 🛡️ PROTEÇÃO: Se o usuário ainda não foi carregado pelo Auth, não faz nada e espera
+  if (!userLogado) return;
 
   messagesDiv.innerHTML = "";
 
   snapshot.forEach((doc) => {
-
     const msg = doc.data();
+
+    // 🛡️ SEGUNDA PROTEÇÃO: Evita que mensagens antigas sem 'uid' ou mal estruturadas quebrem o código
+    if (!msg.uid || !msg.usuario) return;
 
     const isEu = msg.uid === userLogado.uid;
 
@@ -84,9 +89,13 @@ onSnapshot(q, (snapshot) => {
         </div>
       </div>
     `;
-
   });
 
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
+});
+// Enviar mensagem ao apertar ENTER
+msgInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    sendBtn.click();
+  }
 });
